@@ -1,0 +1,52 @@
+
+{% extends 'base.html' %}
+
+{% block 'content' %}
+    <h2 class="mt-2">Deletar Produto "{{object.name}}"</h2>
+    <div class="mt-2 mb-5 p-5 bg-light rounded-lg">
+        <div class="row ">
+            <div class="col">
+                <h2>Tem certeza que deseja deletar o produto abaixo?</h2>
+                <p class="text-danger">Excluir esse produto irá corromper os dados de entrada e saída do produto</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <ul class="list-group">
+                    <li class="list-group-item">Nome: {{ object.name }}</li>
+                    <li class="list-group-item">Tamanho: {{ object.size }}</li>
+                    <li class="list-group-item">Cor: {{ object.color }}</li>
+                    <li class="list-group-item">Categoria: {{ object.category }}</li>
+                    <li class="list-group-item">Marca: {{ object.brand }}</li>
+                    {% if object.status %}
+                        <li class="list-group-item">Publicado: <span class="text-success">Sim</span></li>
+                    {% else %}
+                        <li class="list-group-item">Publicado: <span class="text-danger">Não</span></li>
+                    {% endif %}
+                    <li class="list-group-item">Criado em: {{ object.created_at }}</li>
+                    <li class="list-group-item">Última atualização: {{ object.updated_at }}</li>
+                </ul>
+            </div>
+            <div class="col-6">
+                <img src="{{ object.image.url }}" class="w-100 rounded-lg">
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col">
+                <ul class="nav justify-content-center">
+                    <li class="nav-item mx-2">
+                        <a class="nav-link btn btn-primary" href="{% url 'detail' object.id %}">Voltar</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <form method="post">
+                            {% csrf_token %}
+                            <input class="nav-link btn btn-danger" type="submit" value="Confirmar deleção">
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="p-4">
+    </div>
+{% endblock %}

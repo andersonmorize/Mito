@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block 'content' %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <div class="row mt-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Valor investido até agora
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">R$ {{ saldos.input }}</h3>
+                </div>
+            </div> 
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Valor de retorno até agora
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">R$ {{ saldos.output }}</h3>
+                </div>
+            </div> 
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Valor líquido
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">R$ {{ saldos.liquid }}</h3>
+                </div>
+            </div> 
+        </div>
+    </div>
+
+
+    <div class="row mt-4">
+        <div class="col-6">
+            <h2 class="text-center">Unidades Entradas/saídas</h2>
+            <canvas id="all-amounts"></canvas>
+        </div>
+        <div class="col-6">
+            <h2 class="text-center">Valores Entradas/saídas</h2>
+            <canvas id="all-prices"></canvas>
+        </div>
+    </div>
+
+<script type="text/javascript">
+
+
+    const labels = []
+    const input_amounts = []
+    const input_prices = []
+    const output_amounts = []
+    const output_prices = []
+
+    {% for i in graph_inputs.dates %}
+        labels.push("{{ i }}")
+    {% endfor %}
+
+    {% for i in graph_inputs.input %}
+        input_amounts.push(parseFloat("{{ i.amount }}"))
+        input_prices.push(parseFloat("{{ i.price }}"))
+    {% endfor %}
+
+    {% for i in graph_inputs.output %}
+        output_amounts.push(parseFloat("{{ i.amount }}"))
+        output_prices.push(parseFloat("{{ i.price }}"))
+    {% endfor %}
+
+    const data_amounts = {
+        labels: labels,
+        datasets: [{
+            label: 'Entrada',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: input_amounts,
+            tension: 0.3,
+
+        },
+        {
+            label: 'Saida',
+            backgroundColor: 'rgb(0, 99, 132)',
+            borderColor: 'rgb(0, 99, 132)',
+            data: output_amounts,
+            tension: 0.3,
+        }]
+    };
+
+    const data_prices = {
+        labels: labels,
+        datasets: [{
+            label: 'Entrada',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: input_prices,
+            tension: 0.3,
+        },
+        {
+            label: 'Saida',
+            backgroundColor: 'rgb(0, 99, 132)',
+            borderColor: 'rgb(0, 99, 132)',
+            data: output_prices,
+            tension: 0.3,
+        }]
+    };
+
+    const config_amounts = {
+        type: 'line',
+        data: data_amounts,
+        options: {}
+    };
+
+    const config_prices = {
+        type: 'line',
+        data: data_prices,
+        options: {}
+    };
+
+    const chart_amounts = new Chart(
+        document.getElementById('all-amounts'),
+        config_amounts
+    );
+
+    const chart_prices = new Chart(
+        document.getElementById('all-prices'),
+        config_prices
+    );
+
+</script>
+
+{% endblock %}

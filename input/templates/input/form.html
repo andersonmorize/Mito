@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block 'content' %}
+
+<h2 class="mt-2">{{ title_page }}</h2>
+
+<form class="mt-3 bg-light p-5 rounded-lg" method="post">
+    {% csrf_token %}
+    {% for hidden_field in form.hidden_fields %}
+        {{ hidden_field }}
+    {% endfor %}
+
+    {% for visible_field in form.visible_fields %}
+        {% if visible_field == form.product %}
+            <fieldset disabled>
+                {{ visible_field|as_crispy_field }}
+            </fieldset>
+            {{ visible_field.as_hidden }}
+        {% else %}
+            {{ visible_field|as_crispy_field }}
+        {% endif %}
+    {% endfor %}
+    <input type="submit" class="btn btn-success" value="Cadastrar Entrada">
+</form>
+
+<div class="m-5 p-5">
+    <div class="m-4 p-5">
+    </div>
+</div>
+{% endblock %}

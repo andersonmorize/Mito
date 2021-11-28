@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block 'content' %}
+
+<nav class="navbar mb-5">
+    <h2 class="">Marcas</h2>
+    <a href="{% url 'create_brand' %}" class="btn btn-success">Adicionar Marca</a>
+</nav>
+
+<div class="row justify-content-center">
+    <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Operações</th>
+                    <th scope="col">Criando em</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for brand in brands %}
+                    <tr>
+                        <th scope="row">{{ brand.id }}</th>
+                        <td>
+                            <a href="{% url 'product_brand' brand.name %}">{{ brand.name }}</a>
+                        </td>
+                        <td>
+                            <a href="{% url 'update_brand' brand.id %}" class="btn btn-secondary">Editar</a>
+                            {% comment %} <a href="#" class="btn btn-danger">Remover</a> {% endcomment %}
+                        </td>
+                        <td>{{ brand.created_at }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    {% include 'partial/_pagination.html' %}
+</div>
+
+{% endblock %}

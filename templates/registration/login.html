@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block 'content' %}
+
+    <h2 class="mt-2">Login</h2>
+
+    {% if next %}
+        {% if user.is_authenticated %}
+        <p>Sua conta não tem acesso a esta página. Para prosseguir,
+        por favor faça login com uma conta que tenha acesso.</p>
+        {% else %}
+        <p>Por favor, faça o login para ver esta página.</p>
+        {% endif %}
+    {% endif %}
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input class="btn btn-primary" type="submit" value="login" />
+        <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+
+    {# Assumes you setup the password_reset view in your URLconf #}
+    <p><a href="{% url 'password_reset' %}">Senha perdida?</a></p>
+{% endblock %}

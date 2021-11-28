@@ -1,0 +1,122 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <title>Controle de Estoque</title>
+
+    <!--_head.html-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap/css/theme_1564087106285.css' %}" rel="stylesheet">
+    <!--/_head.html-->
+</head>
+
+<body>
+
+<!--_nav.html-->
+<div class="container-fluid">
+    <p class="text-center text-muted mb-0"><small>Bem-vindo(a) a nossa loja</small></p>
+</div>
+<div class="container-fluid  border-top border-bottom py-2 bg-white">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-12">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white px-0">
+                <a class="navbar-brand" href="{% url 'catalog_index' %}">Mito Parelhas</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'catalog_index' %}">Produtos <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'catalog_sex' 'm' %}">Masculinos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'catalog_sex' 'f' %}">Femininos</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Categorias
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                {% for category in categories %}
+                                    <a class="dropdown-item" href="{% url 'catalog_category' category.name %}">{{ category.name }}</a>
+                                {% endfor %}
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Marcas
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                {% for brand in brands %}
+                                    <a class="dropdown-item" href="{% url 'catalog_brand' brand.name %}">{{ brand.name }}</a>
+                                {% endfor %}
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Tags
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                {% for tag in tags %}
+                                    <a class="dropdown-item" href="{% url 'catalog_tag' tag.name %}">{{ tag.name }}</a>
+                                {% endfor %}
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Fale conosco</a>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'catalog_search' %}">
+                        <input name="search" value="{{ request.GET.search }}" class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Search">
+                        <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Ir</button>
+                    </form>  
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+<!--/_nav.html-->
+
+<!-- Page Content -->
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-12 py-3">
+            {% block 'content'%}
+            {% endblock %}
+        </div>
+    </div>  
+</div>
+
+
+<!--_footer.html-->
+<footer class="bg-white text-light border-top">
+    <div class="container pt-4 ">
+        <div class="row">
+            <div class="col">
+                <p class="text-left text-muted">Powered by Django</p>
+            </div>
+            <div class="col">
+                <p class="text-right text-muted">Made By Texugão dos Algoritmos</p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!--/_footer.html-->
+
+<script src="{% static 'vendor/jquery/jquery.slim.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block 'content' %}
+
+
+<nav class="navbar">
+  <h2 class="">Produtos</h2>
+  <div class="">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="btn btn-success" href="{% url 'create' %}">Cadastrar Produto</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<hr>
+
+<div class="row justify-content-center">
+    <div class="col-9">
+        <div class="row">
+            {% for product in products %}
+                <div class="col-4 p-2">
+                    <div class="card">
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item p-0">Preço: {{ product.price }}</li>
+                                <li class="list-group-item p-0">Estoque: {{ product.amount }}</li>
+                                {% if product.status %}
+                                    <li class="list-group-item p-0">Publicado: <span class="text-success">Sim</span></li>
+                                {% else %}
+                                    <li class="list-group-item p-0">Publicado: <span class="text-danger">Não</span></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item p-0 bg-light"><a href="{% url 'detail' product.id %}" class="card-link">Mais detalhes</a></li>
+                                <li class="list-group-item p-0 bg-light"><a href="{% url 'add' product.id %}" class="card-link">Adicionar no estoque</a></li>
+                                <li class="list-group-item p-0 bg-light"><a href="{% url 'remove' product.id %}" class="card-link">Retirar do estoque</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="row justify-content-center">
+            {% include 'partial/_pagination.html' %}
+        </div>
+    </div>
+    <div class="col-3 p-2">
+
+        <div class="row mb-3 px-1">
+            <form method="GET" action="{% url 'product_search' %}">
+                <div class="form-row align-items-center">
+                    <div class="col-10">
+                        <input name="search" value="{{ request.GET.search }}" class="form-control" type="search" placeholder="Pesquisar"
+                            aria-label="Search">
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-primary">Go</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+            
+        <div class="row px-1">
+            <div class="col border rounded-lg p-2">
+                <h4>Categorias</h4>
+                <hr>
+                {% for category in categories %}
+                    <a class="btn btn-primary m-1" href="{% url 'product_category' category.name %}">{{ category.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row mt-3 px-1">
+            <div class="col border rounded-lg p-2">
+                <h4>Marcas</h4>
+                <hr>
+                {% for brand in brands %}
+                    <a class="btn btn-primary m-1" href="{% url 'product_brand' brand.name %}">{{ brand.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row mt-3 px-1">
+            <div class="col border rounded-lg p-2">
+                <h4>Tags</h4>
+                <hr>
+                {% for tag in tags %}
+                    <a class="btn btn-primary m-1" href="{% url 'product_tag' tag.name %}">{{ tag.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

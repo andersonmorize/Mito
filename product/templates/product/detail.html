@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block 'content' %}
+    <div class="row">
+        <div class="col">
+            <h2 class="mt-2">Produto #{{product.id}}</h2>
+            <div class="mt-2 p-5 bg-light rounded-lg">
+                <div class="row ">
+                    <div class="col-9">
+                        <h2>{{ product.name }}</h2>
+                        <p>{{ product.description|safe }}</p>
+                    </div>
+                    <div class="col-3 text-right">
+                        <h2>Quant. {{ product.amount }}<small style="font-size: 12px;">unidades</small></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <ul class="list-group">
+                            <li class="list-group-item">Preço: {{ product.price }}</li>
+                            <li class="list-group-item">Tamanho: {{ product.size }}</li>
+                            <li class="list-group-item">Cor: {{ product.color }}</li>
+                            {% if product.sex == 'm' %}
+                                <li class="list-group-item">Sexo: Masculino</li>
+                            {% elif product.sex == 'f' %}
+                                <li class="list-group-item">Sexo: Feminino</li>
+                            {% else %}
+                                <li class="list-group-item">Sexo: Unissex</li>
+                            {% endif %}
+                            <li class="list-group-item">Categoria: {{ product.category }}</li>
+                            <li class="list-group-item">Tags: 
+                                {% for tag in tags %}
+                                    {{ tag.name }}, 
+                                {% endfor %}
+                            </li>
+                            <li class="list-group-item">Marca: {{ product.brand }}</li>
+                            {% if product.status %}
+                                <li class="list-group-item">Publicado: <span class="text-success">Sim</span></li>
+                            {% else %}
+                                <li class="list-group-item">Publicado: <span class="text-danger">Não</span></li>
+                            {% endif %}
+                            <li class="list-group-item">Criado em: {{ product.created_at }}</li>
+                            <li class="list-group-item">Última atualização: {{ product.updated_at }}</li>
+                        </ul>
+                    </div>
+                    <div class="col-6">
+                        <img src="{{ product.image.url }}" class="w-100 rounded-lg">
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col">
+                        <ul class="nav justify-content-center">
+                            <li class="nav-item mx-2">
+                                <a class="nav-link btn btn-primary" href="{% url 'update' product.id %}">Editar</a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a class="nav-link btn btn-secondary" href="{% url 'add' product.id %}">Adicionar no estoque</a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a class="nav-link btn btn-info" href="{% url 'remove' product.id %}">Remover do estoque</a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a class="nav-link btn btn-danger" href="{% url 'delete' product.id %}">Deletar</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col mx-3 bg-white rounded-lg py-3">
+                        <h4>Adicionados ao estoque  <a href="{% url 'input_product' product.id %}" class="btn btn-primary btn-sm">Ver Todos</a></h4>
+                        <table class="table table-sm mt-3">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Quantidade Adicionada</th>
+                                    <th scope="col">Data:</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for input in inputs %}
+                                    <tr>
+                                        <th scope="row">{{ input.amount }}</th>
+                                        <td>{{ input.created_at }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col mx-3 bg-white rounded-lg py-3">
+                        <h4>Retirados do estoque  <a href="{% url 'output_product' product.id %}" class="btn btn-primary btn-sm">Ver Todos</a></h4>
+                        <table class="table table-sm mt-3">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Quantidade Retirada</th>
+                                    <th scope="col">Data:</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for output in outputs %}
+                                    <tr>
+                                        <th scope="row">{{ output.amount }}</th>
+                                        <td>{{ output.created_at }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

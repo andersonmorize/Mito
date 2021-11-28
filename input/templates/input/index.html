@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block 'content' %}
+
+<nav class="navbar">
+  <h2 class="">Entrada de produtos</h2>
+</nav>
+
+<div class="row justify-content-center">
+    <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Produto</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Criando em</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for input in inputs %}
+                    <tr>
+                        <th scope="row">{{ input.id }}</th>
+                        {% if input.product.id %}
+                            <td><a href="{% url 'detail' input.product.id %}">{{ input.product }}</a></td>
+                        {% else %}
+                            <td>Produto desconhecido</td>
+                        {% endif %}
+                        <td>{{ input.amount }}</td>
+                        <td>{{ input.created_at }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    {% include 'partial/_pagination.html' %}
+</div>
+
+{% endblock %}

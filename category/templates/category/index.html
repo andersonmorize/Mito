@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block 'content' %}
+
+<nav class="navbar mb-5">
+    <h2 class="">Categorias</h2>
+    <a href="{% url 'create_category' %}" class="btn btn-success">Adicionar Categoria</a>
+</nav>
+
+<div class="row justify-content-center">
+    <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Operações</th>
+                    <th scope="col">Criando em</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                    <tr>
+                        <th scope="row">{{ category.id }}</th>
+                        <td>
+                            <a href="{% url 'product_category' category.name %}">{{ category.name }}</a>
+                        </td>
+                        <td>
+                            <a href="{% url 'update_category' category.id %}" class="btn btn-secondary">Editar</a>
+                            {% comment %} <a href="#" class="btn btn-danger">Remover</a> {% endcomment %}
+                        </td>
+                        <td>{{ category.created_at }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    {% include 'partial/_pagination.html' %}
+</div>
+
+{% endblock %}

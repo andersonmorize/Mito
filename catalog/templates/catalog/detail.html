@@ -1,0 +1,41 @@
+{% extends 'catalog/base.html' %}
+
+{% block 'content' %}
+    
+    <div class="row">
+        <div class="col">
+            <h3 class="text-left">{{ title_session }}</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <img src="{{ product.image.url }}" class="w-100 rounded-lg">
+        </div>
+        <div class="col-6 px-5">
+            <p class="my-0"><small class="text-muted">Categoria: <a href="#" class="">{{ product.category }}</a></small></p>
+            <p class="my-0"><small class="text-muted">Tags:
+                {% for tag in product_tags %} 
+                    <a href="{% url 'catalog_tag' tag.name %}" class="">{{ tag.name }}</a>
+                {% endfor %}
+            </small></p>
+            <p class="my-0"><small class="text-muted">Sexo: 
+                {% if product.sex == 'm'%}
+                    <a href="{% url 'catalog_sex' 'm' %}" class="">Masculino</a>
+                {% else %}
+                    <a href="{% url 'catalog_sex' 'f' %}" class="">Feminino</a>
+                {% endif %}
+            </small></p>
+
+
+            <h1>{{ product.name }}</h1>
+            <h4 class="text-muted">{{ product.description|safe }}</h4>
+            <h2>R${{ product.price }}</h2>
+            <h5>Em até 10x sem juros!</h5>
+            <p class="text-muted">Faça sua compra pelo WhatsApp agora mesmo</p>
+            <a class="btn btn-success btn-lg rounded-pill text-white">Comprar agora!</a>
+
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,87 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <title>Controle de Estoque</title>
+
+    <!--_head.html-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap/css/theme_1564087106285.css' %}" rel="stylesheet">
+    <!--/_head.html-->
+</head>
+
+<body>
+
+<!--_nav.html-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary static-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'index' %}">Controle de estoque</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index_input' %}">Entradas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index_output' %}">Saidas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index_category' %}">Categorias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index_tag' %}">Tags</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index_brand' %}">Marcas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--/_nav.html-->
+
+<!-- Page Content -->
+<div class="container">
+    {% block 'content'%}
+    {% endblock %}
+</div>
+
+<!--_footer.html-->
+<footer class="bg-primary text-light">
+    <div class="container navbar-dark pt-4 mt-5">
+        <div class="row">
+            <div class="col">
+                <p class="text-left">Powered by Django</p>
+            </div>
+            <div class="col">
+                <p class="text-right">Made By Texugão dos Algoritmos</p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!--/_footer.html-->
+
+<script src="{% static 'vendor/jquery/jquery.slim.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+
+</html>
