@@ -34,15 +34,22 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="{% url 'catalog_index' %}">Produtos <span class="sr-only">(current)</span></a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'catalog_sex' 'm' %}">Masculinos</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{% url 'catalog_sex' 'u' %}">Unisex</a>
+                        </li>
+                        {% for category in categories %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'catalog_category' category.name %}">{{ category.name }}</a>
+                            </li>
+                        {% endfor %}
+                        <!--
+                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'catalog_sex' 'f' %}">Femininos</a>
                         </li>
+                        
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Categorias
@@ -53,6 +60,7 @@
                                 {% endfor %}
                             </div>
                         </li>
+                        -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Marcas

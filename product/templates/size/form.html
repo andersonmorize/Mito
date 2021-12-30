@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block 'content' %}
+
+<h2 class="mt-2">{{ title_page }}</h2>
+
+<form class="mt-3 bg-light p-5 rounded-lg" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% for hidden_field in form.hidden_fields %}
+        {{ hidden_field }}
+    {% endfor %}
+
+    {{ form.size|as_crispy_field }}
+
+    {{ form.amount|as_crispy_field }}
+
+    <fieldset disabled>
+        {{ form.product|as_crispy_field }}
+    </fieldset>
+    {{ form.product.as_hidden }}
+
+    <input type="submit" class="btn btn-success" value="Enviar">
+</form>
+{% endblock %}

@@ -2,6 +2,7 @@ from django.urls import path
 from output.views import OutputCreateView
 from input.views import InputCreateView
 from product.views import (
+    # Product
     ProductListView,
     ProductCreateView,
     ProductUpdateView,
@@ -11,6 +12,10 @@ from product.views import (
     ProductBrandListView,
     ProductTagListView,
     ProductSearchListView,
+    
+    # Size
+    ProductSizeCreateView,
+    ProductSizeUpdateView,
 )
 
 
@@ -37,5 +42,8 @@ urlpatterns = [
 
     # Product Search
     path('search/', ProductSearchListView.as_view(), name='product_search'),
-
+    
+    #Size
+    path('<int:product>/sizes/create/', ProductSizeCreateView.as_view(), name='product_size_create'),
+    path('<int:product>/sizes/update/<pk>/', ProductSizeUpdateView.as_view(), name='product_size_update')
 ]

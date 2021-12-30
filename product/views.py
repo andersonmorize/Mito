@@ -4,14 +4,14 @@ from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 
-from product.models import Product
+from product.models import Product, Size
 from tag.models import Tag
 from category.models import Category
 from brand.models import Brand
 from input.models import Input
 from output.models import Output
 
-from product.forms import ProductForm
+from product.forms import ProductForm, SizeForm
 
 
 class ProductListView(LoginRequiredMixin, ListView):
@@ -142,5 +142,42 @@ class ProductSearchListView(ProductListView):
 
         return qs
 
+# Size 
+class ProductSizeCreateView(LoginRequiredMixin, CreateView):
+    model = Size
+    form_class = SizeForm
+    template_name = 'size/form.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title_page'] = 'Adicionar Tamanho'
+        product = Product.objects.get(id=self.kwargs.get('product'))
+        context['form'] = SizeForm(initial={'product': product.id})
+        return context
+
+    def get_success_url(self):
+        return f'/products/{self.object.id}/detail'
+    
+    
+class ProductSizeUpdateView(LoginRequiredMixin, UpdateView):
+    model = Size
+    form_class = SizeForm
+
+    template_name = 'size/form.html'
+    
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title_page'] = 'Editar Tamanho'
+        product = Product.objects.get(id=self.kwargs.get('product'))
+        context['form'] = SizeForm(initial={
+            'product': product.id, 
+            'amount': self.object.amount,
+            'size': self.object.size
+        })
+        return context
+    
+
+    def get_success_url(self):
+        return f'/products/{self.object.id}/detail'
 

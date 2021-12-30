@@ -133,6 +133,23 @@ class CatalogSearchListView(CatalogListView):
 
 
 class CatalogSexListView(CatalogListView):
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        sex = self.kwargs.get('sex', None)
+
+        if sex == 'm':
+            gender = 'Masculino'
+        elif sex == 'f':
+            gender = 'Feminino'
+        else:
+            gender = 'Unissex'
+            
+        context['title_session'] = 'Gênero: ' + gender
+
+        return context
+    
+    
     def get_queryset(self):
         qs = super().get_queryset()
         

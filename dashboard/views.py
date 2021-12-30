@@ -44,31 +44,33 @@ class DashboardIndex(TemplateView):
 
 
     def saldos(self):
-        output = Output.objects.all().aggregate(price=Sum('price')).get('price')
-        input = Input.objects.all().aggregate(price=Sum('price')).get('price')
+        output = Output.objects.all().aggregate(price=Sum('price')).get('price') * Output.objects.all().count()
+        input = Input.objects.all().aggregate(price=Sum('price')).get('price') * Input.objects.all().count()
         liquid = output - input
 
         return {'output': f"{output:.2f}", 'input': f"{input:.2f}", 'liquid': f"{liquid:.2f}" }
 
     def graph_inputs(self):
 
-        date = timezone.now()
-
+        date = timezone.now() + timedelta(days=30)
+        month = date.month
+        year = date.year
+        
         dates = []
         input = []
         output = []
+        
         for i in range(6):
-            date_aux = date - timedelta(days=30)
-
+            
             input.append(Input.objects.filter(
-                Q(created_at__lte=date),
-                Q(created_at__gte=date_aux)
-            ).aggregate(amount=Sum('amount'), price=Sum('price')))
+                    Q(created_at__month=month),
+                    Q(created_at__year=year)
+                ).aggregate(amount=Sum('amount'), price=Sum('price')))
 
             output.append(Output.objects.filter(
-                Q(created_at__lte=date),
-                Q(created_at__gte=date_aux)
-            ).aggregate(amount=Sum('amount'), price=Sum('price')))
+                    Q(created_at__month=month),
+                    Q(created_at__year=year)
+                ).aggregate(amount=Sum('amount'), price=Sum('price')))
 
             input[i]['amount'] = float(input[i]['amount']) if input[i]['amount'] else 0
             input[i]['price'] = float(input[i]['price']) if input[i]['price'] else 0
@@ -76,10 +78,14 @@ class DashboardIndex(TemplateView):
             output[i]['amount'] = float(output[i]['amount']) if output[i]['amount'] else 0
             output[i]['price'] = float(output[i]['price']) if output[i]['price'] else 0
 
+            if month > 1:
+                month = month - 1
+            else:
+                month = 12
+                year = year - 1
 
+            dates.append(f'{month}/{year}')            
 
-            dates.append(date.strftime("%d/%m/%Y"))
-            date = date_aux
 
         dates.reverse()
         input.reverse()
