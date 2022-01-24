@@ -10,7 +10,7 @@
                     Valor investido até agora
                 </div>
                 <div class="card-body">
-                    <h3 class="card-title">R$ {{ saldos.input }}</h3>
+                    <h3 class="card-title">R$ </h3>
                 </div>
             </div> 
         </div>
@@ -20,7 +20,7 @@
                     Valor de retorno até agora
                 </div>
                 <div class="card-body">
-                    <h3 class="card-title">R$ {{ saldos.output }}</h3>
+                    <h3 class="card-title">R$ </h3>
                 </div>
             </div> 
         </div>
@@ -30,7 +30,7 @@
                     Valor líquido
                 </div>
                 <div class="card-body">
-                    <h3 class="card-title">R$ {{ saldos.liquid }}</h3>
+                    <h3 class="card-title">R$ </h3>
                 </div>
             </div> 
         </div>
@@ -47,10 +47,12 @@
             <canvas id="all-prices"></canvas>
         </div>
     </div>
+    -->
 
 <script type="text/javascript">
 
-
+    {% comment 'test' %}
+    
     const labels = []
     const input_amounts = []
     const input_prices = []
@@ -129,7 +131,7 @@
         document.getElementById('all-prices'),
         config_prices
     );
-
+    {% endcomment %}
 </script>
 
 {% endblock %}

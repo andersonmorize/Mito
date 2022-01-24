@@ -12,14 +12,11 @@
         {{ hidden_field }}
     {% endfor %}
 
-    {% if update %}
-        <fieldset disabled>
-            {{ form.size|as_crispy_field }}
-        </fieldset>
-        {{ form.size.as_hidden }}
-    {% else %}
-        {{ form.size|as_crispy_field  }}
-    {% endif %}
+
+    <fieldset disabled>
+        {{ form.size|as_crispy_field }}
+    </fieldset>
+    {{ form.size.as_hidden }}
 
     {{ form.amount|as_crispy_field }}
 

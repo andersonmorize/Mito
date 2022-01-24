@@ -6,19 +6,15 @@
             <h2 class="mt-2">Produto #{{product.id}}</h2>
             <div class="mt-2 p-5 bg-light rounded-lg">
                 <div class="row ">
-                    <div class="col-9">
+                    <div class="col">
                         <h2>{{ product.name }}</h2>
                         <p>{{ product.description|safe }}</p>
-                    </div>
-                    <div class="col-3 text-right">
-                        <h2>Quant. {{ product.amount }}<small style="font-size: 12px;">unidades</small></h2>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <ul class="list-group">
                             <li class="list-group-item">Preço: {{ product.price }}</li>
-                            <li class="list-group-item">Tamanho: {{ product.size }}</li>
                             <li class="list-group-item">Cor: {{ product.color }}</li>
                             {% if product.sex == 'm' %}
                                 <li class="list-group-item">Sexo: Masculino</li>
@@ -54,10 +50,7 @@
                                 <a class="nav-link btn btn-primary" href="{% url 'update' product.id %}">Editar</a>
                             </li>
                             <li class="nav-item mx-2">
-                                <a class="nav-link btn btn-secondary" href="{% url 'add' product.id %}">Adicionar no estoque</a>
-                            </li>
-                            <li class="nav-item mx-2">
-                                <a class="nav-link btn btn-info" href="{% url 'remove' product.id %}">Remover do estoque</a>
+                                <a class="nav-link btn btn-secondary" href="{% url 'product_size_create' product.id %}">Adicionar tamanho</a>
                             </li>
                             <li class="nav-item mx-2">
                                 <a class="nav-link btn btn-danger" href="{% url 'delete' product.id %}">Deletar</a>
@@ -65,41 +58,60 @@
                         </ul>
                     </div>
                 </div>
+                <div class="row mt-5">
+                    <div class="col">
+                        <table class="table text-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Tamanho</th>
+                                    <th scope="col">Quantidade</th>
+                                    <th scope="col">Operações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for size in sizes %}
+                                    <tr>
+                                        <td>{{ size.size }}</td>
+                                        <td>{{ size.amount }}</td>
+                                        <td>
+                                            <form class="d-inline" action="{% url 'product_size_add' product=product.id pk=size.id %}" method="post" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <input type="submit" class="btn btn-success" value="+1">
+                                            </form>
+                                            <form class="d-inline" action="{% url 'product_size_subtract' product=product.id pk=size.id %}" method="post" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <input type="submit" class="btn btn-secondary" value="-1">
+                                            </form>
+                                            <a href="{% url 'product_size_add_more' product=product.id pk=size.id %}" class="link-primary px-3">Adicionar mais</a>
+                                            <a href="{% url 'product_size_subtract_more' product=product.id pk=size.id %}" class="link-info px-3">Remover mais</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>    
+                        </table>
+                    </div>
+                </div>
+
 
                 <div class="row mt-5">
                     <div class="col mx-3 bg-white rounded-lg py-3">
-                        <h4>Adicionados ao estoque  <a href="{% url 'input_product' product.id %}" class="btn btn-primary btn-sm">Ver Todos</a></h4>
+                        <h4>Adicionados ao estoque  <a href="" class="btn btn-primary btn-sm">Ver Todos</a></h4>
                         <table class="table table-sm mt-3">
                             <thead>
                                 <tr>
                                     <th scope="col">Quantidade Adicionada</th>
-                                    <th scope="col">Data:</th>
+                                    <th scope="col">Tamanho</th>
+                                    <th scope="col">Preço da unidade</th>
+                                    <th scope="col">Data</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for input in inputs %}
+                                {% for transaction in transactions %}
                                     <tr>
-                                        <th scope="row">{{ input.amount }}</th>
-                                        <td>{{ input.created_at }}</td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col mx-3 bg-white rounded-lg py-3">
-                        <h4>Retirados do estoque  <a href="{% url 'output_product' product.id %}" class="btn btn-primary btn-sm">Ver Todos</a></h4>
-                        <table class="table table-sm mt-3">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Quantidade Retirada</th>
-                                    <th scope="col">Data:</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for output in outputs %}
-                                    <tr>
-                                        <th scope="row">{{ output.amount }}</th>
-                                        <td>{{ output.created_at }}</td>
+                                        <th scope="row">{{ transaction.amount }}</th>
+                                        <td>{{ transaction.size }}</td>
+                                        <td>{{ transaction.unit_price }}</td>
+                                        <td>{{ transaction.created_at }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
