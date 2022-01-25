@@ -2,7 +2,8 @@ from django.db import models
 from product.models import Size
 
 class Transaction(models.Model):
-
+    """Used to map the inputs and outputs of products
+    """
     size = models.ForeignKey(
         Size, on_delete=models.DO_NOTHING,
         null=True,

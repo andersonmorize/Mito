@@ -5,11 +5,24 @@ from brand.models import Brand
 
 
 class Product(models.Model):
+    CLOTHES = 1 
+    SHOES = 2 
+    ACCESSIRIES = 3
+    
+    TYPE_CHOICES = [
+        (CLOTHES, 'Roupas'),
+        (SHOES, 'Calçados'),
+        (ACCESSIRIES, 'Acessórios'),
+    ]
+    
+    MALE = 1
+    FAMALE = 2
+    UNISEX = 3
 
     SEX_CHOICES = [
-        ('m', 'Masculino'),
-        ('f', 'Feminino'),
-        ('u', 'Unissex')
+        (MALE, 'Masculino'),
+        (FAMALE, 'Feminino'),
+        (UNISEX, 'Unissex')
     ]
 
     name = models.CharField(
@@ -20,8 +33,10 @@ class Product(models.Model):
         default=0, verbose_name='Preço')
     color = models.CharField(
         max_length=100, blank=True, null=True, verbose_name='Cor')
-    sex = models.CharField(
-        max_length=15, choices=SEX_CHOICES, verbose_name='Sexo')
+    sex = models.PositiveSmallIntegerField(
+        choices=SEX_CHOICES, verbose_name='Sexo')
+    type_product = models.PositiveSmallIntegerField(
+        choices=TYPE_CHOICES, verbose_name='Tipo')
     image = models.ImageField(
         upload_to='imagens/%Y/%m', verbose_name='Imagem')
     category = models.ForeignKey(

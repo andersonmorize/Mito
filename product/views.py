@@ -175,7 +175,8 @@ class ProductSizeCreateView(LoginRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
         context['title_page'] = 'Adicionar Tamanho'
         product = Product.objects.get(id=self.kwargs.get('product'))
-        context['form'] = self.form_class(initial={'product': product.id})
+        context['form'] = self.form_class(
+            initial={'product': product.id})
         return context
 
     def get_success_url(self):

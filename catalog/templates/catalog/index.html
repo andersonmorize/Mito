@@ -16,9 +16,24 @@
                         <h5 class="card-title mb-1">{{ product.name }}</h5>
                         <h2 class="card-text mb-0"><small>R$</small>{{ product.price }}</h2>
                         <p class="bold">Em até 10x sem juros</p>
-                        
-
-                        <a href="#" class="btn btn-success rounded-pill card-link">Comprar</a>
+                        {% if product.type_product == 1 %}
+                            <div class="row justify-content-center mb-3">
+                                <a href="" class="col btn btn-light border border-4 rounded-pill mx-2">PP<a>
+                                <a href="" class="col btn btn-light border border-4 rounded-pill mx-2">P<a>
+                                <a href="" class="col btn btn-light border border-4 rounded-pill mx-2">M<a>
+                                <a href="" class="col btn btn-light border border-4 rounded-pill mx-2">G<a>
+                                <a href="" class="col btn btn-light border border-4 rounded-pill mx-2">GG<a>
+                            </div>
+                        {% elif product.type_product == 2 %}
+                            <div class="row justify-content-center mb-3">
+                                <a href="" class="col btn btn-light border border-4 rounded-pill mx-2">36<a>
+                                <a href="" class="col btn btn-light border border-4 rounded-pill mx-2">38<a>
+                                <a href="" class="col btn btn-light border border-4 rounded-pill mx-2">40<a>
+                                <a href="" class="col btn btn-light border border-4 rounded-pill mx-2">42<a>
+                                <a href="" class="col btn btn-light border border-4 rounded-pill mx-2">44<a>
+                            </div>
+                        {% endif %}
+                        <a href="https://api.whatsapp.com/send?phone=83991788944&text=Gostaria de comprar esse produto chamado {{ product.name }}" class="btn btn-success rounded-pill card-link" target="blank_">Comprar</a>
                         <a href="{% url 'catalog_detail' product.id %}" class="btn btn-light border border-4 rounded-pill card-link">Mais detalhes</a>
                     </div>
                 </div>
