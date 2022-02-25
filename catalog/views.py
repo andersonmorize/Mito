@@ -1,13 +1,14 @@
+from django.http import HttpResponseNotFound
+from django.db.models import Q
+
 from product.models import Product
 from category.models import Category
 from tag.models import Tag
 from brand.models import Brand
+
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
-
-from django.db.models import Q
-
 
 class CatalogListView(ListView):
     model = Product
@@ -136,15 +137,22 @@ class CatalogSexListView(CatalogListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        sex = self.kwargs.get('sex', None)
+        
+        gender = 'Todos'
+        
+        try:
+            sex = int(self.kwargs.get('sex'))
 
-        if sex == 'm':
-            gender = 'Masculino'
-        elif sex == 'f':
-            gender = 'Feminino'
-        else:
-            gender = 'Unissex'
-            
+            if sex == 1:
+                gender = 'Masculino'
+            elif sex == 2:
+                gender = 'Feminino'
+            elif sex == 3:
+                gender = 'Unissex'    
+        
+        except:
+            pass
+        
         context['title_session'] = 'Gênero: ' + gender
 
         return context
@@ -154,12 +162,14 @@ class CatalogSexListView(CatalogListView):
         qs = super().get_queryset()
         
         sex = self.kwargs.get('sex', None)
+        
+        try:
+            sex = int(sex)
 
-        if not sex:
+            qs = qs.filter(
+                Q(sex__exact=sex)
+            )
+        except:
             return qs
-
-        qs = qs.filter(
-            Q(sex__exact=sex)
-        )
 
         return qs
