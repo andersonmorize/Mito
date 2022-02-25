@@ -1,4 +1,5 @@
 from pathlib import Path
+from socket import gethostname
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,11 +11,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-ac2hdtugse#48i8x6^cy7*xec2j5wdtx5_51c)_9e!cvr44*pw'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = ["*"]
-
+if gethostname() == 'Loja':
+    DEBUG = False
+    ALLOWED_HOSTS = ["lojasmito.online"]
+else:
+    DEBUG = True
+    ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
