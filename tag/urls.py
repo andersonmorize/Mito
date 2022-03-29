@@ -8,6 +8,6 @@ from tag.views import (
 
 urlpatterns = [
     path('', TagListView.as_view(), name='index_tag'),
-    path('create/', TagCreateView.as_view(), name='create_tag'),
-    path('<pk>/update/', TagUpdateView.as_view(), name='update_tag')
+    path('create', TagCreateView.as_view(), name='create_tag'),
+    path('<pk>/update', TagUpdateView.as_view(), name='update_tag')
 ]

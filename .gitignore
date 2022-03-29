@@ -216,4 +216,7 @@ cython_debug/
 *.3dm
 *.max
 
+# Static files
+staticfiles/
+
 # End of https://www.toptal.com/developers/gitignore/api/django,images

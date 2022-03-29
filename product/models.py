@@ -38,7 +38,7 @@ class Product(models.Model):
     type_product = models.PositiveSmallIntegerField(
         choices=TYPE_CHOICES, verbose_name='Tipo')
     image = models.ImageField(
-        upload_to='imagens/%Y/%m', verbose_name='Imagem')
+        upload_to='images/%Y/%m', verbose_name='Imagem')
     category = models.ForeignKey(
         Category, on_delete=models.DO_NOTHING, verbose_name='Categoria')
     brand = models.ForeignKey(
