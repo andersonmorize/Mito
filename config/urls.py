@@ -5,7 +5,7 @@ from django.conf import settings
 
 
 urlpatterns = [
-    path('/', include('catalog.urls')),
+    path('', include('catalog.urls')),
     path('products/', include('product.urls')),
     path('transactions/', include('transaction.urls')),
     path('categories/', include('category.urls')),
