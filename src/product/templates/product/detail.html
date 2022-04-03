@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block 'content' %}
     <div class="row">
@@ -41,7 +40,7 @@
                         </ul>
                     </div>
                     <div class="col-6">
-                        <img src="{% static product.image.url %}" class="w-100 rounded-lg">
+                        <img src="{{ product.image.url }}" class="w-100 rounded-lg">
                     </div>
                 </div>
                 <div class="row mt-5">

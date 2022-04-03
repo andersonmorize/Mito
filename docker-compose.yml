@@ -36,4 +36,6 @@ services:
 
 volumes:
   production_static_data:
+    external: true
   production_db_volume:
+    external: true
