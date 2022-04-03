@@ -1,5 +1,5 @@
+import os
 from pathlib import Path
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -78,8 +78,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        "ENGINE": 'django.db.backends.postgresql',
+        "NAME": os.environ.get("POSTGRES_DB"),
+        "USER": os.environ.get("POSTGRES_USER"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
+        "HOST": 'db',
+        "PORT": 5432,
     }
 }
 
@@ -119,13 +123,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (BASE_DIR / 'templates/static', )
-STATIC_ROOT = STATIC_ROOT = BASE_DIR / 'staticfiles'
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = (BASE_DIR / 'templates/static', )
+# STATIC_ROOT = STATIC_ROOT = BASE_DIR / 'staticfiles'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'templates/static/media'
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'templates/static/media'
+
+STATICFILES_DIRS = (BASE_DIR / 'templates/static', )
+
+STATIC_URL = '/static/static/'
+STATIC_ROOT = '/vol/web/static'
+
+MEDIA_URL = '/static/media/' 
+MEDIA_ROOT = '/vol/web/media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
