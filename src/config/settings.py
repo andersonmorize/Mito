@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('DJANGO_APP_SECRET_KEY')
 
-DEBUG = False
+DEBUG = os.environ.get('DJANGO_DEBUG')
 ALLOWED_HOSTS = [
     'localhost',
     'lojasmito.online',
