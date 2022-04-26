@@ -8,7 +8,7 @@ services:
       - "5432:5432"
     restart: always
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data/
+      - development_db_volume:/var/lib/postgresql/data/
     env_file:
       - .env
   
@@ -24,3 +24,6 @@ services:
     env_file: .env
     entrypoint:
       - ./../scripts/entrypoint.dev.sh
+
+volumes:
+  development_db_volume:
