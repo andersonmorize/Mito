@@ -36,4 +36,4 @@ RUN chmod -R 755 /app
 # switch to our user
 USER user
 
-CMD ["entrypoint.sh"]
+# CMD ["entrypoint.prod.sh"]
